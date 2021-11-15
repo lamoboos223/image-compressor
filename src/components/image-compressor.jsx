@@ -63,32 +63,41 @@ export default class imageCompressor extends React.Component {
     render() {
         return (
             <div >
-                
+
                 {/* Display input image */}
                 <div>
-                    <Card style={{ width: '9rem' }}>
                         {this.state.uploadImage ? (
-                        <div>
-                            <Card.Title>name: { this.state.originalImage.name }</Card.Title>
-                            <Card.Text>
-                                {/* convert the image size from byte to megabyte */}
-                                size: { this.state.originalImage.size /1024/1024 } MB
-                            </Card.Text>
-                            <Card.Img
-                                variant="top"
-                                src={this.state.originalLink}
-                            ></Card.Img>
-                        </div>
+                            <div>
+                                <Card style={{ width: '18rem' }}>
+                                    <Card.Img variant="top" src={this.state.originalLink} ></Card.Img>
+                                    <Card.Body>
+                                        <Card.Title>{ this.state.originalImage.name }</Card.Title>
+                                        <Card.Text>
+                                            {/* convert the image size from byte to megabyte */}
+                                            size: { this.state.originalImage.size /1024/1024 } MB
+                                        </Card.Text>
+                                        {/* compress image button */}
+                                        <div>
+                                            <br />
+                                            {this.state.outputFileName ? (
+                                            <button
+                                                type="button"
+                                                className=" btn btn-dark"
+                                                onClick={e => this.click(e)}
+                                            >
+                                                Compress
+                                            </button>
+                                            ) : (
+                                            <></>
+                                            )}
+                                        </div>
+                                    </Card.Body>
+                                </Card>
+                            </div>
                         ) : (
-                        <div>
-                            <Card.Img
-                                variant="top"
-                                src="http://navparivartan.in/wp-content/uploads/2018/11/placeholder.png"
-                                >
-                            </Card.Img>
-                        </div>
+                        <></>
                         )}
-                    </Card>
+                        <br/>
                     {/* Choose file button */}
                     <div className="d-flex justify-content-center">
                     <input
@@ -100,39 +109,29 @@ export default class imageCompressor extends React.Component {
                     </div>
                 </div>
 
-                {/* compress image button */}
-                <div>
-                    <br />
-                    {this.state.outputFileName ? (
-                    <button
-                        type="button"
-                        className=" btn btn-dark"
-                        onClick={e => this.click(e)}
-                    >
-                        Compress
-                    </button>
-                    ) : (
-                    <></>
-                    )}
-                </div>
+
 
                 {/* Display output image */}
                 <div>
                         { this.state.clicked ?
                         (
                             <div>
-                                {/* Download image link */}
-                                <a
-                                href={this.state.compressedLink}
-                                download={this.state.outputFileName}
-                                className="mt-2 btn btn-dark w-75"
-                                >
-                                Download {this.state.outputFileName}
-                                </a>
+                                <Card>
+                                    <Card.Img variant="top" src={this.state.compressedLink}></Card.Img>
+                                    {/* output image details */}
+                                    <Card.Text>size: { this.state.compressedImage.size/1024/1024 } MB
 
-                                {/* output image details */}
-                                <Card.Text>size: { this.state.compressedImage.size/1024/1024 } MB</Card.Text>
-                                <Card.Img variant="top" src={this.state.compressedLink}></Card.Img>
+                                    {/* Download image link */}
+                                    <br/>
+                                    <a
+                                    href={this.state.compressedLink}
+                                    download={this.state.outputFileName}
+                                    className="mt-2 btn btn-dark w-75"
+                                    >
+                                    Download {this.state.outputFileName}
+                                    </a>
+                                    </Card.Text>
+                                </Card>
                             </div>
                         ):(
                             <></>
